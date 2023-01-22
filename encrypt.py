@@ -70,16 +70,21 @@ def showimage(bytes):
     img = Image.open(BytesIO(bytes))
     img.show()
 
-# 16B key and initialization vector
-key = b"0123456789012345"
-iv = b"0123456789012345"
-aesCipher = AES.new(key, AES.MODE_ECB)
-plaintext = get_image_bytearray("mustang.bmp")
+def main():
+    # 16B key and initialization vector
+    key = b"0123456789012345"
+    iv = b"0123456789012345"
+    aesCipher = AES.new(key, AES.MODE_ECB)
+    plaintext = get_image_bytearray("mustang.bmp")
 
-# the header is preserved so we can actually view the image
-header, image = plaintext[0:54], plaintext[54:]
-ecb_cipher = ecb(image, aesCipher)
-showimage(header + ecb_cipher)
+    # the header is preserved so we can actually view the image
+    header, image = plaintext[0:54], plaintext[54:]
+    ecb_cipher = ecb(image, aesCipher)
+    showimage(header + ecb_cipher)
 
-cbc_cipher = cbc(image, iv, aesCipher)
-showimage(header + cbc_cipher)
+    cbc_cipher = cbc(image, iv, aesCipher)
+    showimage(header + cbc_cipher)
+    return
+
+if __name__ == "__main__":
+    main()
