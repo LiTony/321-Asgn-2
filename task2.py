@@ -76,3 +76,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#                  sign    verify    sign/s verify/s
+# rsa  512 bits 0.000044s 0.000003s  22757.3 300727.4
+# rsa 1024 bits 0.000131s 0.000009s   7651.3 115677.7
+# rsa 2048 bits 0.000943s 0.000029s   1060.3  34006.7
+# rsa 4096 bits 0.006969s 0.000106s    143.5   9390.8
+
+# The 'numbers' are in 1000s of bytes per second processed.
+# type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes
+# aes-128 cbc     121363.81k   140288.30k   140596.82k   324600.15k   330372.44k
+# aes-192 cbc     106600.54k   116355.82k   119149.82k   277373.95k   278484.31k
+# aes-256 cbc      93688.91k   100787.80k   102237.95k   240501.76k   242302.98k
+
