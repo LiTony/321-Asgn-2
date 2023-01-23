@@ -7,8 +7,11 @@ def pad_128_bits(message):
     offset = 16 - len(message) % 16
     if offset == 16:
         offset = 0
-    for i in range(offset):
-        message = message + bytes(offset)
+    offsetArr = [offset for x in range(offset)]
+    print("arr: \n", offsetArr)
+    offsetBytes = bytearray(offsetArr)
+    print("bytes: \n", offsetBytes)
+    message = message + offsetBytes
     return message
 
 # pads the message and returns a 
@@ -49,6 +52,17 @@ def cbc(message, iv, aes):
         encrypted = encrypted + curr_cipher
         prev_cipher = curr_cipher
     return encrypted
+
+def decrypt_cbc(message, iv, aes):
+    chunks = pad_and_chunk(message)
+
+    plaintext = b""
+    prev_cipher = iv
+    for chunk in chunks:
+        decrypted = aes.decrypt(chunk)
+        plaintext = plaintext + xor(prev_cipher, decrypted)
+        prev_cipher = chunk
+    return plaintext
 
 # workaround for xor-ing bytes
 def xor(b1, b2):
